@@ -1,18 +1,31 @@
-import cv2
-import numpy as np
-import urllib.request
-cap = cv2.VideoCapture(0)
-
-while(1):
+from twilio.rest import Client
+from flask import Flask, redirect, url_for,render_template
+app= Flask(__name__)
+import os
+import cloudinary.uploader
+cloudinary.config( 
+    cloud_name = "dqe3ctrik", 
+    api_key = "676391596632685", 
+    api_secret = "lzdXvAQ1HZ4QmHwVDXIY2JGPOPQ" 
+)
+@app.route("/")
+def home():
+    cloudinary.uploader.upload("https://mausam.imd.gov.in/Radar/ppz_goa.gif", 
+    public_id = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M"))
    
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    
-    lower_red = np.array([30,150,50])
-    upper_red = np.array([255,255,180])
-    
-    mask = cv2.inRange(hsv, lower_red, upper_red)
-    res = cv2.bitwise_and(frame,frame, mask= mask)
+    return render_template('index.html')
 
-    cv2.imshow('frame',frame)
-    cv2.imshow('mask',mask)
-    cv2.imshow('res',res)
+    
+
+# Your Account Sid and Auth Token from twilio.com/console
+# DANGER! This is insecure. See http://twil.io/secure
+
+
+
+
+if __name__=="__main__":
+    port = int(os.getenv('PORT', 5000))
+
+    print("Starting app on port %d" % port)
+
+    app.run(debug=True, port=port, host='0.0.0.0')
