@@ -15,7 +15,7 @@ def home():
     cloudinary.uploader.upload("https://mausam.imd.gov.in/Radar/ppz_goa.gif", 
     public_id = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M"))
    
-    return render_template('index.html')
+    return "OK"
 
     
 
